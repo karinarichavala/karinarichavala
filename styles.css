@@ -10,7 +10,7 @@
   /* Paleta */
   --color-pink-pale: #F3E4E1;      /* fondo del header */
   --color-terracotta-dark: #6C3F39;/* acento principal: barra, botones, iconos */
-  --color-terracotta: #C87F73;     /* variante de acento */
+  --color-terracotta: #C87F73;     /* variante de acento (reservada de la paleta) */
   --color-pink-mid: #D9A79E;       /* bordes y líneas */
   --color-white: #FFFFFF;
   --color-gray-light: #FAFAFA;     /* fondo de tarjetas */
@@ -29,9 +29,12 @@
   --radius-sm: 6px;
   --radius-md: 10px;
 
-  /* Movimiento */
-  --transition-fast: 180ms ease;
-  --transition-medium: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Movimiento. Las duraciones van aparte para poder reutilizarlas
+     como retardo (delay) en las transiciones de visibility. */
+  --duration-fast: 180ms;
+  --duration-medium: 350ms;
+  --transition-fast: var(--duration-fast) ease;
+  --transition-medium: var(--duration-medium) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ---------- 2. Reset y bases ---------- */
@@ -106,6 +109,25 @@ svg[viewBox] {
 }
 
 /* ---------- 3. Utilidades ---------- */
+/* Primer elemento enfocable: permite saltar la navegación con el teclado */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 12px;
+  z-index: 200;
+  padding: 10px 16px;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  background-color: var(--color-terracotta-dark);
+  color: var(--color-white);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 /* Texto disponible para lectores de pantalla pero invisible en pantalla */
 .u-visually-hidden {
   position: absolute;
@@ -457,11 +479,20 @@ svg[viewBox] {
   transform: rotate(180deg);
 }
 
-/* La altura la controla JS (max-height) para animar con precisión */
+/* La altura la controla JS (max-height) para animar con precisión.
+   visibility: hidden saca el contenido plegado del orden de tabulación
+   y del lector de pantalla; el retardo evita cortar la animación al cerrar. */
 .card__detail {
   max-height: 0;
   overflow: hidden;
-  transition: max-height var(--transition-medium);
+  visibility: hidden;
+  transition: max-height var(--transition-medium),
+              visibility 0s linear var(--duration-medium);
+}
+
+.card--open .card__detail {
+  visibility: visible;
+  transition: max-height var(--transition-medium), visibility 0s;
 }
 
 .card__detail-inner {
@@ -594,7 +625,8 @@ svg[viewBox] {
     display: block;
   }
 
-  /* El menú se despliega debajo de la barra */
+  /* El menú se despliega debajo de la barra. Cerrado va con
+     visibility: hidden para que sus enlaces no sean alcanzables con Tab. */
   .nav {
     position: absolute;
     top: 100%;
@@ -604,11 +636,15 @@ svg[viewBox] {
     border-top: 1px solid rgba(255, 255, 255, 0.15);
     overflow: hidden;
     max-height: 0;
-    transition: max-height var(--transition-medium);
+    visibility: hidden;
+    transition: max-height var(--transition-medium),
+                visibility 0s linear var(--duration-medium);
   }
 
   .nav--open {
     max-height: 260px;
+    visibility: visible;
+    transition: max-height var(--transition-medium), visibility 0s;
   }
 
   .topbar__inner {
@@ -680,5 +716,7 @@ svg[viewBox] {
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+    /* Sin esto, los retardos de visibility seguirían activos */
+    transition-delay: 0s !important;
   }
 }
