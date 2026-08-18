@@ -1,0 +1,684 @@
+/* =========================================================
+   CV / Portafolio — Karina Arichavala
+   Organización: variables → reset → utilidades → layout →
+   componentes (topbar, header, secciones, tarjetas, skills,
+   footer) → media queries.
+   ========================================================= */
+
+/* ---------- 1. Variables (paleta y escalas) ---------- */
+:root {
+  /* Paleta */
+  --color-pink-pale: #F3E4E1;      /* fondo del header */
+  --color-terracotta-dark: #6C3F39;/* acento principal: barra, botones, iconos */
+  --color-terracotta: #C87F73;     /* variante de acento */
+  --color-pink-mid: #D9A79E;       /* bordes y líneas */
+  --color-white: #FFFFFF;
+  --color-gray-light: #FAFAFA;     /* fondo de tarjetas */
+
+  --color-text: #1A1A1A;           /* texto principal */
+  --color-text-secondary: #5F5E5A; /* texto secundario */
+  --color-text-tertiary: #888780;  /* metadata */
+  --color-border: #E8E4E1;         /* separadores sutiles */
+
+  /* Tipografía */
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+
+  /* Espaciado y medidas */
+  --content-width: 1080px;
+  --topbar-height: 60px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+
+  /* Movimiento */
+  --transition-fast: 180ms ease;
+  --transition-medium: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- 2. Reset y bases ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Compensa la barra fija al saltar a un ancla */
+  scroll-padding-top: var(--topbar-height);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p, dl, dd, figure {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Foco visible y consistente para navegación con teclado */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-terracotta-dark);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Todos los iconos del sprite comparten el mismo trazo */
+svg[viewBox] {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* El sprite no debe ocupar espacio ni ser leído por lectores de pantalla */
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ---------- 3. Utilidades ---------- */
+/* Texto disponible para lectores de pantalla pero invisible en pantalla */
+.u-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 4. Barra superior ---------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-terracotta-dark);
+}
+
+.topbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: var(--content-width);
+  min-height: var(--topbar-height);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.topbar__brand {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--color-white);
+}
+
+.topbar__burger {
+  display: none; /* solo visible en mobile */
+  padding: 6px;
+  color: var(--color-pink-pale);
+}
+
+.topbar__burger-icon {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+/* Alterna icono hamburguesa / cerrar según el estado del menú */
+.topbar__burger-icon--close,
+.topbar__burger[aria-expanded="true"] .topbar__burger-icon--open {
+  display: none;
+}
+
+.topbar__burger[aria-expanded="true"] .topbar__burger-icon--close {
+  display: block;
+}
+
+/* ---------- 5. Navegación ---------- */
+.nav__list {
+  display: flex;
+  gap: 28px;
+}
+
+.nav__link {
+  position: relative;
+  display: inline-block;
+  padding: 4px 0;
+  font-size: 0.875rem;
+  color: var(--color-pink-pale);
+  transition: color var(--transition-fast);
+}
+
+.nav__link::after {
+  /* Subrayado que aparece en la sección activa */
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-white);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-fast);
+}
+
+.nav__link:hover,
+.nav__link--active {
+  color: var(--color-white);
+}
+
+.nav__link--active {
+  font-weight: 600;
+}
+
+.nav__link--active::after {
+  transform: scaleX(1);
+}
+
+/* ---------- 6. Header / presentación ---------- */
+.header__banner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 200px;
+  background-color: var(--color-pink-pale);
+  background-image: url("resources/banner-red-nodos.svg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.header__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 104px;
+  height: 104px;
+  border: 4px solid var(--color-white);
+  border-radius: 50%;
+  background-color: var(--color-terracotta-dark);
+  color: var(--color-white);
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  /* Superpone el avatar entre el banner y el fondo blanco */
+  transform: translateY(50%);
+}
+
+.header__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  /* El padding superior deja espacio a la mitad del avatar que sobresale */
+  padding: 72px 24px 40px;
+  text-align: center;
+}
+
+.header__name {
+  font-size: 2.125rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.header__role {
+  margin-top: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-terracotta-dark);
+}
+
+.header__bio {
+  max-width: 620px;
+  margin-top: 16px;
+  color: var(--color-text-secondary);
+}
+
+.header__facts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 32px;
+  margin-top: 20px;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.header__fact {
+  display: flex;
+  gap: 6px;
+}
+
+.header__fact-label {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.header__fact-value {
+  margin: 0;
+}
+
+/* ---------- 7. Iconos de contacto ---------- */
+.contact {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.contact__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--color-pink-mid);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-white);
+  color: var(--color-terracotta-dark);
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+.contact__item:hover {
+  background-color: var(--color-pink-pale);
+  border-color: var(--color-terracotta-dark);
+  transform: translateY(-2px);
+}
+
+.contact__icon {
+  width: 19px;
+  height: 19px;
+}
+
+/* ---------- 8. Secciones ---------- */
+.section {
+  border-top: 1px solid var(--color-border);
+  scroll-margin-top: var(--topbar-height);
+}
+
+.section__inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.section__title {
+  padding-left: 14px;
+  border-left: 3px solid var(--color-terracotta-dark);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.section__subtitle {
+  margin-top: 6px;
+  padding-left: 17px;
+  font-size: 0.875rem;
+  color: var(--color-text-tertiary);
+}
+
+/* ---------- 9. Tarjetas expandibles ---------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-gray-light);
+  overflow: hidden;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card:hover,
+.card--open {
+  border-color: var(--color-pink-mid);
+  box-shadow: 0 2px 12px rgba(108, 63, 57, 0.07);
+}
+
+.card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex-grow: 1;
+  width: 100%;
+  padding: 20px;
+  text-align: left;
+}
+
+.card__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.card__problem {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.card__solution {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-terracotta-dark);
+}
+
+/* La flecha diagonal ya trae aire interno, por eso el offset es menor */
+.card__solution-icon {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+}
+
+/* Pie de la tarjeta: nombre del proyecto + pista de interacción */
+.card__meta {
+  margin-top: 2px;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--color-text-tertiary);
+}
+
+/* El separador va unido al nombre para que desaparezca junto con él */
+.card__meta-name::after {
+  content: " ·";
+}
+
+/* Se muestra una pista u otra según el estado de la tarjeta */
+.card--open .card__meta-name,
+.card--open .card__meta-hint--closed,
+.card__meta-hint--open {
+  display: none;
+}
+
+.card--open .card__meta-hint--open {
+  display: inline;
+}
+
+.card__chevron {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  color: var(--color-terracotta-dark);
+  transition: transform var(--transition-medium);
+}
+
+.card--open .card__chevron {
+  transform: rotate(180deg);
+}
+
+/* La altura la controla JS (max-height) para animar con precisión */
+.card__detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-medium);
+}
+
+.card__detail-inner {
+  padding: 0 20px 20px;
+}
+
+/* Título del contenido expandido: retoma el nombre que el pie ocultó */
+.card__title {
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-terracotta-dark);
+}
+
+.card__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.card__list li {
+  position: relative;
+  padding-left: 16px;
+}
+
+.card__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--color-pink-mid);
+}
+
+/* ---------- 10. Tags ---------- */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.tags__item {
+  padding: 4px 10px;
+  border: 1px solid var(--color-pink-mid);
+  border-radius: 999px;
+  background-color: var(--color-white);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-terracotta-dark);
+}
+
+/* ---------- 11. Habilidades técnicas ---------- */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.skills__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-gray-light);
+  text-align: center;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.skills__item:hover {
+  border-color: var(--color-pink-mid);
+  transform: translateY(-2px);
+}
+
+.skills__icon {
+  width: 28px;
+  height: 28px;
+  color: var(--color-terracotta-dark);
+}
+
+.skills__name {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* ---------- 12. Footer ---------- */
+.footer {
+  border-top: 1px solid var(--color-border);
+  padding: 28px 24px;
+  text-align: center;
+}
+
+.footer__text {
+  font-size: 0.8125rem;
+  color: var(--color-text-tertiary);
+}
+
+/* =========================================================
+   13. Responsive
+   ========================================================= */
+
+/* --- Tablet --- */
+@media (max-width: 900px) {
+  .skills {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .header__banner {
+    height: 170px;
+  }
+}
+
+/* --- Mobile: menú hamburguesa y grids a una columna --- */
+@media (max-width: 720px) {
+  :root {
+    --topbar-height: 56px;
+  }
+
+  .topbar__burger {
+    display: block;
+  }
+
+  /* El menú se despliega debajo de la barra */
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-terracotta-dark);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height var(--transition-medium);
+  }
+
+  .nav--open {
+    max-height: 260px;
+  }
+
+  .topbar__inner {
+    position: relative;
+    flex-wrap: wrap;
+  }
+
+  .nav__list {
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 24px 16px;
+  }
+
+  .nav__link {
+    display: block;
+    padding: 12px 0;
+    font-size: 0.9375rem;
+  }
+
+  .nav__link::after {
+    display: none; /* en vertical el color basta para marcar la sección activa */
+  }
+
+  .header__banner {
+    height: 140px;
+  }
+
+  .header__avatar {
+    width: 88px;
+    height: 88px;
+    font-size: 1.5rem;
+  }
+
+  .header__content {
+    padding: 60px 20px 36px;
+  }
+
+  .header__name {
+    font-size: 1.75rem;
+  }
+
+  .header__facts {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .section__inner {
+    padding: 36px 20px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skills {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Accesibilidad: respetar preferencia de movimiento reducido --- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

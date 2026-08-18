@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karina Arichavala — Ingeniera en Software · Data Engineering</title>
+  <meta name="description" content="Portafolio de Karina Arichavala, estudiante de Ingeniería en Software con enfoque en Data Engineering: experiencia, proyectos y habilidades técnicas.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!--
+    Sprite SVG: los iconos se definen una sola vez y se reutilizan con <use>.
+    Evita peticiones a un CDN externo y mantiene el peso de la página al mínimo.
+  -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <defs>
+      <g id="icon-mail"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></g>
+      <g id="icon-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12" rx="1"/><circle cx="4" cy="4" r="2"/></g>
+      <g id="icon-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></g>
+      <g id="icon-chevron-down"><path d="m6 9 6 6 6-6"/></g>
+      <g id="icon-menu"><path d="M4 6h16M4 12h16M4 18h16"/></g>
+      <g id="icon-close"><path d="M18 6 6 18M6 6l12 12"/></g>
+      <g id="icon-arrow-down-right"><path d="m7 7 10 10"/><path d="M17 7v10H7"/></g>
+      <g id="icon-code"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></g>
+      <g id="icon-coffee"><path d="M10 2v2M14 2v2M6 2v2"/><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4Z"/></g>
+      <g id="icon-database"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></g>
+      <g id="icon-server"><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 7h.01M6 17h.01"/></g>
+      <g id="icon-bar-chart"><path d="M3 3v18h18"/><path d="M7 16v-5M12 16V7M17 16v-8"/></g>
+      <g id="icon-scatter"><path d="M3 3v18h18"/><circle cx="9" cy="15" r="1.6"/><circle cx="13" cy="10" r="1.6"/><circle cx="18" cy="7" r="1.6"/><circle cx="8" cy="8" r="1.6"/></g>
+      <g id="icon-table"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></g>
+      <g id="icon-sigma"><path d="M18 7V4H6l6 8-6 8h12v-3"/></g>
+      <g id="icon-nodes"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></g>
+    </defs>
+  </svg>
+
+  <!-- ============ Barra superior fija ============ -->
+  <div class="topbar">
+    <div class="topbar__inner">
+      <a class="topbar__brand" href="#sobre-mi">Karina Arichavala</a>
+
+      <button class="topbar__burger" type="button" aria-label="Abrir menú de navegación"
+              aria-expanded="false" aria-controls="nav-principal">
+        <svg class="topbar__burger-icon topbar__burger-icon--open" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-menu"/></svg>
+        <svg class="topbar__burger-icon topbar__burger-icon--close" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-close"/></svg>
+      </button>
+
+      <nav class="nav" id="nav-principal" aria-label="Navegación principal">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#sobre-mi">Sobre mí</a></li>
+          <li><a class="nav__link" href="#experiencia">Experiencia</a></li>
+          <li><a class="nav__link" href="#proyectos">Proyectos</a></li>
+          <li><a class="nav__link" href="#habilidades">Habilidades</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ============ Header / presentación ============ -->
+  <header class="header" id="sobre-mi">
+    <div class="header__banner">
+      <span class="header__avatar" aria-hidden="true">KA</span>
+    </div>
+
+    <div class="header__content">
+      <h1 class="header__name">Karina Arichavala</h1>
+      <p class="header__role">Ingeniera de software · Data engineering · AI/ML</p>
+      <p class="header__bio">
+        Soy estudiante de último año de Ingeniería en Software y aplico mi formación al mundo de los datos:
+        desde construir la infraestructura que los sostiene hasta convertirlos en modelos que resuelven problemas reales. 
+        Soy creativa a la hora de encontrar soluciones, pero también estructurada y atenta al detalle en cómo las ejecuto.
+      </p>
+
+      <dl class="header__facts">
+        <div class="header__fact">
+          <dt class="header__fact-label">Educación:</dt>
+          <dd class="header__fact-value">Ingeniera de software</dd>
+        </div>
+        <div class="header__fact">
+          <dt class="header__fact-label">Idiomas:</dt>
+          <dd class="header__fact-value">Inglés Intermedio</dd>
+        </div>
+      </dl>
+
+      <ul class="contact">
+        <li>
+          <a class="contact__item" href="mailto:karina.arichavala.tech@gmail.com">
+            <svg class="contact__icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-mail"/></svg>
+            <span class="u-visually-hidden">Escribir a karina.arichavala.tech@gmail.com</span>
+          </a>
+        </li>
+        <li>
+          <a class="contact__item" href="https://www.linkedin.com/in/karinarichavala/" target="_blank" rel="noopener">
+            <svg class="contact__icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-linkedin"/></svg>
+            <span class="u-visually-hidden">Perfil de LinkedIn (se abre en una pestaña nueva)</span>
+          </a>
+        </li>
+        <li>
+          <a class="contact__item" href="https://github.com/karinarichavala" target="_blank" rel="noopener">
+            <svg class="contact__icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-github"/></svg>
+            <span class="u-visually-hidden">Perfil de GitHub (se abre en una pestaña nueva)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ Experiencia ============ -->
+    <section class="section" id="experiencia">
+      <div class="section__inner">
+        <h2 class="section__title">Experiencia</h2>
+        <p class="section__subtitle">Prácticas preprofesionales — DGIP · Ago-nov 2025</p>
+
+        <div class="card-grid">
+          <article class="card">
+            <button class="card__header" type="button" aria-expanded="false" aria-controls="exp-1">
+              <span class="card__summary">
+                <span class="card__problem">
+                  Calcular los indicadores de los Premios a la Excelencia Académica implicaba
+                  cruzar datos de Scopus, SJR y fuentes internas a mano.
+                </span>
+                <span class="card__solution">
+                  <svg class="card__solution-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-down-right"/></svg>
+                  Automaticé el cálculo con scripts en R y Python.
+                </span>
+                <span class="card__meta">
+                  <span class="card__meta-name">Premios a la Excelencia Académica</span>
+                  <span class="card__meta-hint card__meta-hint--closed">clic para ver más</span>
+                  <span class="card__meta-hint card__meta-hint--open">clic para cerrar</span>
+                </span>
+              </span>
+              <svg class="card__chevron" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="card__detail" id="exp-1">
+              <div class="card__detail-inner">
+                <h3 class="card__title">Premios a la Excelencia Académica</h3>
+                <ul class="card__list">
+                  <li>Identifiqué los datos necesarios para el cálculo de indicadores institucionales.</li>
+                  <li>Analicé información de Scopus, SJR y fuentes internas.</li>
+                  <li>Adapté scripts de R y Jupyter Notebooks en Python para automatizar el cálculo.</li>
+                  <li>Generé reportes preliminares para validación institucional.</li>
+                </ul>
+                <ul class="tags">
+                  <li class="tags__item">Python</li>
+                  <li class="tags__item">R</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <button class="card__header" type="button" aria-expanded="false" aria-controls="exp-2">
+              <span class="card__summary">
+                <span class="card__problem">
+                  Procesar publicaciones desde la API de Scopus generaba duplicados y consumía
+                  tiempo cada vez que había que actualizar la base.
+                </span>
+                <span class="card__solution">
+                  <svg class="card__solution-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-down-right"/></svg>
+                  Desarrollé una solución modular que solo extrae lo nuevo.
+                </span>
+                <span class="card__meta">
+                  <span class="card__meta-name">Publicaciones de Scopus</span>
+                  <span class="card__meta-hint card__meta-hint--closed">clic para ver más</span>
+                  <span class="card__meta-hint card__meta-hint--open">clic para cerrar</span>
+                </span>
+              </span>
+              <svg class="card__chevron" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="card__detail" id="exp-2">
+              <div class="card__detail-inner">
+                <h3 class="card__title">Publicaciones de Scopus</h3>
+                <ul class="card__list">
+                  <li>Analicé y procesé publicaciones desde la API de Scopus con Python en Jupyter Notebooks.</li>
+                  <li>Desarrollé una solución modular e incremental que evita duplicados y extrae
+                      únicamente las nuevas publicaciones, mejorando la eficiencia del proceso.</li>
+                </ul>
+                <ul class="tags">
+                  <li class="tags__item">Python</li>
+                  <li class="tags__item">API de Scopus</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Proyectos ============ -->
+    <section class="section" id="proyectos">
+      <div class="section__inner">
+        <h2 class="section__title">Proyectos</h2>
+
+        <div class="card-grid">
+          <article class="card">
+            <button class="card__header" type="button" aria-expanded="false" aria-controls="proy-1">
+              <span class="card__summary">
+                <span class="card__problem">
+                  Los modelos de lenguaje toman decisiones que ni sus propios creadores entienden del todo.
+                </span>
+                <span class="card__solution">
+                  <svg class="card__solution-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-down-right"/></svg>
+                  Investigué qué tan bien capturan esas decisiones distintas arquitecturas de interpretabilidad.
+                </span>
+                <span class="card__meta">
+                  <span class="card__meta-name">Interpretabilidad mecanicista en OthelloGPT</span>
+                  <span class="card__meta-hint card__meta-hint--closed">clic para ver más</span>
+                  <span class="card__meta-hint card__meta-hint--open">clic para cerrar</span>
+                </span>
+              </span>
+              <svg class="card__chevron" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="card__detail" id="proy-1">
+              <div class="card__detail-inner">
+                <h3 class="card__title">Interpretabilidad mecanicista en OthelloGPT</h3>
+                <ul class="card__list">
+                  <li>Primer estudio sistemático del impacto del tamaño del dataset en el entrenamiento
+                      de Sparse Autoencoders, un vacío no abordado en la literatura previa.</li>
+                  <li>Comparé 3 arquitecturas de SAE (p-annealing, BatchTopK, Matryoshka) en 15
+                      experimentos, evaluadas con métricas especializadas de interpretabilidad.</li>
+                  <li>Resultados documentados en un artículo científico que aporta evidencia al estado
+                      del arte en interpretabilidad de modelos de juegos de mesa.</li>
+                </ul>
+                <ul class="tags">
+                  <li class="tags__item">Python</li>
+                  <li class="tags__item">PyTorch</li>
+                  <li class="tags__item">Sparse Autoencoders</li>
+                  <li class="tags__item">NumPy</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <button class="card__header" type="button" aria-expanded="false" aria-controls="proy-2">
+              <span class="card__summary">
+                <span class="card__problem">
+                  Muchos casos de fraude bancario en Ecuador se reportan en redes, pero casi nadie los analiza.
+                </span>
+                <span class="card__solution">
+                  <svg class="card__solution-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-down-right"/></svg>
+                  Los procesé para encontrar patrones comunes.
+                </span>
+                <span class="card__meta">
+                  <span class="card__meta-name">Fraude bancario en Ecuador</span>
+                  <span class="card__meta-hint card__meta-hint--closed">clic para ver más</span>
+                  <span class="card__meta-hint card__meta-hint--open">clic para cerrar</span>
+                </span>
+              </span>
+              <svg class="card__chevron" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="card__detail" id="proy-2">
+              <div class="card__detail-inner">
+                <h3 class="card__title">Fraude bancario en Ecuador</h3>
+                <ul class="card__list">
+                  <li>Extraje y analicé comentarios en X sobre Banco Pichincha.</li>
+                  <li>Preprocesé los datos en Python e hice una visualización en Tableau.</li>
+                  <li>Identifiqué patrones comunes de fraude mediante minería de texto.</li>
+                </ul>
+                <ul class="tags">
+                  <li class="tags__item">Python</li>
+                  <li class="tags__item">Tableau</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <button class="card__header" type="button" aria-expanded="false" aria-controls="proy-3">
+              <span class="card__summary">
+                <span class="card__problem">
+                  La desnutrición infantil afecta distinto a cada provincia de Ecuador, y las
+                  causas no siempre son obvias.
+                </span>
+                <span class="card__solution">
+                  <svg class="card__solution-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-down-right"/></svg>
+                  Construí un modelo de datos para entender por qué.
+                </span>
+                <span class="card__meta">
+                  <span class="card__meta-name">Desnutrición infantil en Ecuador</span>
+                  <span class="card__meta-hint card__meta-hint--closed">clic para ver más</span>
+                  <span class="card__meta-hint card__meta-hint--open">clic para cerrar</span>
+                </span>
+              </span>
+              <svg class="card__chevron" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="card__detail" id="proy-3">
+              <div class="card__detail-inner">
+                <h3 class="card__title">Desnutrición infantil en Ecuador</h3>
+                <ul class="card__list">
+                  <li>Desarrollé un Data warehouse bajo la metodología Kimball.</li>
+                  <li>Limpié y modelé los datos de forma dimensional y generé visualizaciones en Power BI.</li>
+                  <li>Analicé factores asociados a la desnutrición por provincia y región.</li>
+                </ul>
+                <ul class="tags">
+                  <li class="tags__item">Power BI</li>
+                  <li class="tags__item">Data Warehouse</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <button class="card__header" type="button" aria-expanded="false" aria-controls="proy-4">
+              <span class="card__summary">
+                <span class="card__problem">
+                  A simple vista, es difícil distinguir un zapato original de uno falsificado.
+                </span>
+                <span class="card__solution">
+                  <svg class="card__solution-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-down-right"/></svg>
+                  Entrené una IA que sí puede.
+                </span>
+                <span class="card__meta">
+                  <span class="card__meta-name">Clasificación de calzado</span>
+                  <span class="card__meta-hint card__meta-hint--closed">clic para ver más</span>
+                  <span class="card__meta-hint card__meta-hint--open">clic para cerrar</span>
+                </span>
+              </span>
+              <svg class="card__chevron" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+            <div class="card__detail" id="proy-4">
+              <div class="card__detail-inner">
+                <h3 class="card__title">Clasificación de calzado</h3>
+                <ul class="card__list">
+                  <li>Desarrollé un modelo de IA para distinguir calzado original de falsificado.</li>
+                  <li>Procesé y limpié un dataset propio de imágenes con clases balanceadas.</li>
+                  <li>Apliqué Transfer Learning con el modelo InceptionV3, entrenando las capas
+                      finales con datos personalizados.</li>
+                </ul>
+                <ul class="tags">
+                  <li class="tags__item">Python</li>
+                  <li class="tags__item">InceptionV3</li>
+                  <li class="tags__item">Transfer Learning</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Habilidades técnicas ============ -->
+    <section class="section" id="habilidades">
+      <div class="section__inner">
+        <h2 class="section__title">Habilidades técnicas</h2>
+
+        <ul class="skills">
+          <li class="skills__item">
+            <svg class="skills__icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-code"/></svg>
+            <span class="skills__name">Python</span>
+          </li>
+          <li class="skills__item">
+            <svg class="skills__icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-coffee"/></svg>
+            <span class="skills__name">Java</span>
+          </li>
+          <li class="skills__item">
+            <svg class="skills__icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-database"/></svg>
+            <span class="skills__name">SQL Server</span>
+          </li>
+          <li class="skills__item">
+            <svg class="skills__icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-server"/></svg>
+            <span class="skills__name">PostgreSQL</span>
+          </li>
+          <li class="skills__item">
+            <svg class="skills__icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bar-chart"/></svg>
+            <span class="skills__name">Power BI</span>
+          </li>
+          <li class="skills__item">
+            <svg class="skills__icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-scatter"/></svg>
+            <span class="skills__name">Tableau</span>
+          </li>
+          <li class="skills__item">
+            <svg class="skills__icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-table"/></svg>
+            <span class="skills__name">Pandas</span>
+          </li>
+          <li class="skills__item">
+            <svg class="skills__icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-sigma"/></svg>
+            <span class="skills__name">Numpy</span>
+          </li>
+          <li class="skills__item">
+            <svg class="skills__icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-nodes"/></svg>
+            <span class="skills__name">APIs</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__text">© 2026 Karina Arichavala</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
