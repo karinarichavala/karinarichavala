@@ -3,8 +3,8 @@
    Interacciones: menú hamburguesa, tarjetas expandibles y
    scroll spy. JavaScript vanilla, sin dependencias.
 
-   Cada bloque se inicializa por separado para que un fallo
-   en uno no deje los demás sin funcionar.
+   Cada bloque es independiente y comprueba que sus elementos
+   existan antes de enlazar eventos.
    ========================================================= */
 
 (function () {
@@ -68,11 +68,11 @@
         card.classList.toggle('card--open', willOpen);
         header.setAttribute('aria-expanded', String(willOpen));
 
-        if (willOpen) {
-          detail.style.maxHeight = detail.scrollHeight + 'px';
-        } else {
-          // Fija el alto actual antes de colapsar para que la transición arranque
-          detail.style.maxHeight = detail.scrollHeight + 'px';
+        // El alto real del contenido es el destino al abrir y el punto de
+        // partida al cerrar, así que se fija en ambos casos.
+        detail.style.maxHeight = detail.scrollHeight + 'px';
+
+        if (!willOpen) {
           requestAnimationFrame(function () {
             detail.style.maxHeight = '0px';
           });
