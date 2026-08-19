@@ -142,7 +142,126 @@
     }
   }
 
+  /* ---------------------------------------------------------
+     4. Respaldo del correo
+     Si el sistema no tiene un cliente de correo asociado, el
+     enlace mailto: no produce ninguna reacción visible. El
+     popover muestra la dirección y deja copiarla. El enlace
+     conserva su comportamiento: nunca se cancela el evento.
+     --------------------------------------------------------- */
+  function initEmailFallback() {
+    const trigger = document.querySelector('.contact__item--email');
+    const popover = document.querySelector('.contact__popover');
+    if (!trigger || !popover) return;
+
+    const copyButton = popover.querySelector('.contact__copy');
+    const status = popover.querySelector('[role="status"]');
+    if (!copyButton) return;
+
+    const address = trigger.getAttribute('href').replace('mailto:', '');
+    const AUTO_CLOSE_MS = 4000;   // cierre si no hay interacción
+    const FEEDBACK_MS = 2000;     // el ✓ visible tras copiar, antes de cerrarse
+    const RESET_MS = 250;         // margen para restablecer el icono ya oculto
+    let autoCloseTimer;
+    let feedbackTimer;
+
+    function isOpen() {
+      return popover.classList.contains('contact__popover--open');
+    }
+
+    /* restoreFocus devuelve el foco al icono cuando se cierra por su cuenta;
+       sin eso el foco quedaría en un botón ya invisible. No aplica al cerrar
+       por clic afuera, donde el foco debe seguir a donde el usuario hizo clic. */
+    function close(restoreFocus) {
+      clearTimeout(autoCloseTimer);
+      if (restoreFocus && popover.contains(document.activeElement)) {
+        trigger.focus();
+      }
+      popover.classList.remove('contact__popover--open');
+    }
+
+    trigger.addEventListener('click', function (event) {
+      popover.classList.add('contact__popover--open');
+      clearTimeout(autoCloseTimer);
+
+      // detail === 0 significa activación por teclado: en ese caso no se
+      // cierra solo, o el foco se perdería antes de poder tabular al botón.
+      if (event.detail !== 0) {
+        autoCloseTimer = setTimeout(function () {
+          close(false);
+        }, AUTO_CLOSE_MS);
+      }
+    });
+
+    // Cualquier interacción cancela el cierre automático
+    ['pointerenter', 'focusin', 'click'].forEach(function (type) {
+      popover.addEventListener(type, function () {
+        clearTimeout(autoCloseTimer);
+      });
+    });
+
+    /* navigator.clipboard solo existe en contextos seguros (https o
+       localhost); al abrir el archivo con file:// hace falta el método antiguo. */
+    function copyAddress() {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(address);
+      }
+
+      return new Promise(function (resolve, reject) {
+        const field = document.createElement('textarea');
+        field.value = address;
+        field.setAttribute('readonly', '');
+        field.style.position = 'fixed';
+        field.style.opacity = '0';
+        document.body.appendChild(field);
+        field.select();
+        const copied = document.execCommand('copy');
+        document.body.removeChild(field);
+        copied ? resolve() : reject(new Error('execCommand falló'));
+      });
+    }
+
+    copyButton.addEventListener('click', function () {
+      copyAddress().then(
+        function () {
+          copyButton.classList.add('is-copied');
+          if (status) status.textContent = 'Dirección de correo copiada';
+
+          /* El ✓ se mantiene visible mientras el popover se desvanece, para
+             que lo último que vea el usuario sea la confirmación. El icono
+             se restablece después, ya oculto, listo para la próxima vez. */
+          clearTimeout(feedbackTimer);
+          feedbackTimer = setTimeout(function () {
+            close(true);
+            setTimeout(function () {
+              copyButton.classList.remove('is-copied');
+              if (status) status.textContent = '';
+            }, RESET_MS);
+          }, FEEDBACK_MS);
+        },
+        function () {
+          if (status) status.textContent = 'No se pudo copiar, seleccioná la dirección a mano';
+        }
+      );
+    });
+
+    // Clic fuera: ni en el popover ni en el propio icono de correo
+    document.addEventListener('click', function (event) {
+      if (!isOpen()) return;
+      if (event.target.closest('.contact__popover, .contact__item--email')) return;
+      close();
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && isOpen()) {
+        close();
+        trigger.focus();
+      }
+    });
+  }
+
   initMenu();
   initCards();
   initScrollSpy();
+  initEmailFallback();
 })();
